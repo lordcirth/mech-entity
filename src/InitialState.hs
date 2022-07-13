@@ -35,7 +35,7 @@ weapons = Map.fromList [
   (primitive20mmCannon, Weapon {damage = newDamage 1 6 2})
   ]
 
-w = World {
+initialState = World {
   meta = metas
   ,consumable = Map.empty
   ,equip = equips

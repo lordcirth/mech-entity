@@ -36,6 +36,7 @@ library
       base >=4.7 && <5
     , brick
     , containers
+    , transformers
   default-language: Haskell2010
 
 executable mech-entity-exe
@@ -50,6 +51,7 @@ executable mech-entity-exe
     , brick
     , containers
     , mech-entity
+    , transformers
   default-language: Haskell2010
 
 test-suite mech-entity-test
@@ -65,4 +67,5 @@ test-suite mech-entity-test
     , brick
     , containers
     , mech-entity
+    , transformers
   default-language: Haskell2010

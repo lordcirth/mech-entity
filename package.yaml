@@ -23,6 +23,7 @@ dependencies:
   - base >= 4.7 && < 5
   - brick
   - containers
+  - transformers
 
 library:
   source-dirs: src
