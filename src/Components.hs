@@ -12,7 +12,7 @@ data Weapon = Weapon {}
   deriving (Show, Eq)
 
 data World = World {
-  part :: Map.Map ID Part
+  part     :: Map.Map ID Part
   ,weapons :: Map.Map ID Weapon
 }
   deriving (Show, Eq)
