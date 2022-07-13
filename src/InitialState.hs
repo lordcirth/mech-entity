@@ -1,6 +1,7 @@
 module InitialState where
 
 import           Components
+import           Constructors
 import qualified Data.Map.Strict as Map
 
 scrapMetal = ID 000
@@ -23,11 +24,15 @@ stacks = Map.fromList [
   (scrapMetal, Stack {num = 0})
   ]
 
+weapons :: Map.Map ID Weapon
+weapons = Map.fromList [
+  (primitive20mmCannon, Weapon {damage = newDamage 1 6 2})
+  ]
 
 w = World {
   meta = metas
   ,consumable = Map.empty
   ,equip = equips
   ,stack = stacks -- Multiple items per instance
-  ,weapons = Map.empty
+  ,weapon = weapons
 }

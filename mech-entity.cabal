@@ -26,6 +26,7 @@ source-repository head
 library
   exposed-modules:
       Components
+      Constructors
       InitialState
   other-modules:
       Paths_mech_entity

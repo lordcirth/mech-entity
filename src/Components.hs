@@ -6,6 +6,13 @@ import qualified Data.Map.Strict as Map
 newtype ID = ID Int
   deriving (Show, Eq, Ord)
 
+data Damage = Damage {
+  dieNum   :: Int
+  ,dieSize :: Int
+  ,flatDmg :: Int
+}
+  deriving (Show, Eq)
+
 data Meta = Meta {
   description :: String
   ,name       :: String
@@ -27,7 +34,10 @@ data Stack = Stack {
 }
   deriving (Show, Eq)
 
-data Weapon = Weapon {}
+data Weapon = Weapon {
+  --ammoType :: ID
+  damage :: Damage
+}
   deriving (Show, Eq)
 
 data World = World {
@@ -35,6 +45,6 @@ data World = World {
   ,consumable :: Map.Map ID Consumable
   ,equip      :: Map.Map ID Equipment
   ,stack      :: Map.Map ID Stack
-  ,weapons    :: Map.Map ID Weapon
+  ,weapon     :: Map.Map ID Weapon
 }
   deriving (Show, Eq)
