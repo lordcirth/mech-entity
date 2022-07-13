@@ -1,6 +1,6 @@
 module Main where
 
-import           Components
+import           InitialState
 
 main :: IO ()
 main = putStrLn $ show w
