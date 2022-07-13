@@ -6,7 +6,10 @@ import qualified Data.Map.Strict as Map
 
 scrapMetal = ID 000
 
-primitive20mmCannon = ID 100
+chassis = ID 90
+armor = ID 91
+
+primitive20mmCannon = ID 101
 
 metas :: Map.Map ID Meta
 metas = Map.fromList [
@@ -16,7 +19,10 @@ metas = Map.fromList [
 
 equips :: Map.Map ID Equipment
 equips = Map.fromList [
-  (primitive20mmCannon, Equipment {hp = 5, mass = 5, slots = 3})
+  (chassis, Equipment {hp = 15, mass = 15, slots = 15})
+  -- Hits are never rolled directly to armor
+  ,(armor, Equipment {hp = 15, mass = 10, slots = 0})
+  ,(primitive20mmCannon, Equipment {hp = 5, mass = 5, slots = 3})
   ]
 
 stacks :: Map.Map ID Stack
