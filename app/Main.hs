@@ -1,6 +1,6 @@
 module Main where
 
-import Lib
+import Components
 
 main :: IO ()
-main = someFunc
+main = putStrLn $ show w
