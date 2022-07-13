@@ -1,4 +1,9 @@
 resolver: lts-18.28
 
 packages:
-- .
+  - .
+
+extra-deps:
+  - Cabal-3.6.3.0@sha256:ff97c442b0c679c1c9876acd15f73ac4f602b973c45bde42b43ec28265ee48f4,12459
+  - ghc-lib-parser-9.2.3.20220709@sha256:c50fbbb5d1095dcc916f7dac7336d4a373077aca0e02a5c5ea16bffb5e61c931,12741
+  - ghc-lib-parser-ex-9.2.1.0@sha256:cf9082b394e67f3396d0dd7c5d14e3aa43d95efbb74e75d51905f32f694f6523,3493

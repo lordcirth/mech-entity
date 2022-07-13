@@ -3,10 +3,31 @@
 # For more information, please see the documentation at:
 #   https://docs.haskellstack.org/en/stable/lock_files
 
-packages: []
+packages:
+- completed:
+    pantry-tree:
+      sha256: b250a53bdb56844f047a2927833bb565b936a289abfa85dfc2a63148d776368a
+      size: 19757
+    hackage: Cabal-3.6.3.0@sha256:ff97c442b0c679c1c9876acd15f73ac4f602b973c45bde42b43ec28265ee48f4,12459
+  original:
+    hackage: Cabal-3.6.3.0@sha256:ff97c442b0c679c1c9876acd15f73ac4f602b973c45bde42b43ec28265ee48f4,12459
+- completed:
+    pantry-tree:
+      sha256: 7c6c4e8bd59d618cac964d9f838005c61ec02bd533f2152d07272da21c939dd7
+      size: 27633
+    hackage: ghc-lib-parser-9.2.3.20220709@sha256:c50fbbb5d1095dcc916f7dac7336d4a373077aca0e02a5c5ea16bffb5e61c931,12741
+  original:
+    hackage: ghc-lib-parser-9.2.3.20220709@sha256:c50fbbb5d1095dcc916f7dac7336d4a373077aca0e02a5c5ea16bffb5e61c931,12741
+- completed:
+    pantry-tree:
+      sha256: 2dd58a06c4082e5e00f8b2c860305436de746166676571df00aa390a75be38c9
+      size: 1954
+    hackage: ghc-lib-parser-ex-9.2.1.0@sha256:cf9082b394e67f3396d0dd7c5d14e3aa43d95efbb74e75d51905f32f694f6523,3493
+  original:
+    hackage: ghc-lib-parser-ex-9.2.1.0@sha256:cf9082b394e67f3396d0dd7c5d14e3aa43d95efbb74e75d51905f32f694f6523,3493
 snapshots:
 - completed:
+    sha256: 428ec8d5ce932190d3cbe266b9eb3c175cd81e984babf876b64019e2cbe4ea68
     size: 590100
     url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/18/28.yaml
-    sha256: 428ec8d5ce932190d3cbe266b9eb3c175cd81e984babf876b64019e2cbe4ea68
   original: lts-18.28
