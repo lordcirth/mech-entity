@@ -6,7 +6,8 @@ import           Brick.Widgets.Center
 import           Components
 
 drawUI :: World -> [B.Widget Name]
-drawUI w = []
+drawUI w = drawGameOver w
+  
 
 box :: Int -> Int -> String -> B.Widget Name -> B.Widget Name
 box v h title widget = B.vLimit v $ B.hLimit h $ borderWithLabel (B.str title) widget

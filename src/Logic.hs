@@ -1,7 +1,13 @@
 module Logic where
 
-import qualified Brick      as B
+import qualified Brick        as B
 import           Components
+import qualified Graphics.Vty as V
 
 handleEvent :: World -> B.BrickEvent Name () -> B.EventM Name (B.Next World)
-handleEvent w _ = B.continue w
+
+-- Halt on ESC
+handleEvent gameState (B.VtyEvent (V.EvKey (V.KEsc) _)) = B.halt gameState
+
+-- no-op for all other inputs
+handleEvent w _                                         = B.continue w
