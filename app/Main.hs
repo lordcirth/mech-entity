@@ -1,7 +1,7 @@
 module Main where
 
 import           Brick.Main                (defaultMain)
---import           BrickApp
+import           Render
 import           Components ()
 import           InitialState (initialState)
 --import           Logic (handleEvent)

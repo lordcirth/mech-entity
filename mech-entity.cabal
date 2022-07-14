@@ -25,6 +25,7 @@ source-repository head
 
 library
   exposed-modules:
+      BrickApp
       Components
       Constructors
       InitialState
@@ -37,6 +38,7 @@ library
     , brick
     , containers
     , transformers
+    , vty
   default-language: Haskell2010
 
 executable mech-entity-exe
@@ -52,6 +54,7 @@ executable mech-entity-exe
     , containers
     , mech-entity
     , transformers
+    , vty
   default-language: Haskell2010
 
 test-suite mech-entity-test
@@ -68,4 +71,5 @@ test-suite mech-entity-test
     , containers
     , mech-entity
     , transformers
+    , vty
   default-language: Haskell2010
