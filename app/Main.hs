@@ -1,7 +1,7 @@
 module Main where
 
 import           Brick.Main                (defaultMain)
-import           Render
+import           BrickApp
 import           Components ()
 import           InitialState (initialState)
 --import           Logic (handleEvent)
@@ -11,4 +11,8 @@ import           Control.Monad.Trans.State
 import           InitialState
 
 main :: IO ()
-main = putStrLn $ show initialState
+main = do
+
+  -- Run main loop
+  finalState <- defaultMain brickApp initialState
+  print finalState

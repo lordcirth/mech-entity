@@ -3,6 +3,8 @@ where
 
 import qualified Data.Map.Strict as Map
 
+type Name = ()
+
 newtype ID = ID Int
   deriving (Show, Eq, Ord)
 

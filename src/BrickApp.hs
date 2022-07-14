@@ -1,10 +1,11 @@
 module BrickApp where
 
 import qualified Brick        as B
-import           Components
+import           Components   (Name, World)
 import qualified Graphics.Vty as V
+import           Logic
+import           Rendering
 
-type Name = ()
 
 theMap :: B.AttrMap
 theMap = B.attrMap V.defAttr [ warningText, errorText ]

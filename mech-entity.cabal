@@ -29,6 +29,8 @@ library
       Components
       Constructors
       InitialState
+      Logic
+      Rendering
   other-modules:
       Paths_mech_entity
   hs-source-dirs:
