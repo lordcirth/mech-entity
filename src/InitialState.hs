@@ -36,9 +36,10 @@ weapons = Map.fromList [
   ]
 
 initialState = World {
-  meta = metas
-  ,consumable = Map.empty
+  consumable = Map.empty
   ,equip = equips
+  ,fighter = Map.empty
+  ,meta = metas
   ,stack = stacks -- Multiple items per instance
   ,weapon = weapons
 }

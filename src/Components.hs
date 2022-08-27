@@ -21,6 +21,13 @@ data Meta = Meta {
 }
   deriving (Show, Eq)
 
+data Fighter = Fighter {
+  hp        :: Int
+  ,maxHp    :: Int
+  ,armor    :: Int
+  ,maxArmor :: Int
+}
+
 data Consumable = Consumable
   deriving (Show, Eq)
 
@@ -47,9 +54,10 @@ data GameStatus = Combat | LootScreen | Tinker | PathSelect | GameOver
 
 data World = World {
   status      :: GameStatus
-  ,meta       :: Map.Map ID Meta
   ,consumable :: Map.Map ID Consumable
   ,equip      :: Map.Map ID Equipment
+  ,fighter    :: Map.Map ID Fighter
+  ,meta       :: Map.Map ID Meta
   ,stack      :: Map.Map ID Stack
   ,weapon     :: Map.Map ID Weapon
 }
