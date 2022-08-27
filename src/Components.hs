@@ -42,8 +42,12 @@ data Weapon = Weapon {
 }
   deriving (Show, Eq)
 
+data GameStatus = Combat | LootScreen | Tinker | PathSelect | GameOver
+  deriving (Show, Eq)
+
 data World = World {
-  meta        :: Map.Map ID Meta
+  status      :: GameStatus
+  ,meta       :: Map.Map ID Meta
   ,consumable :: Map.Map ID Consumable
   ,equip      :: Map.Map ID Equipment
   ,stack      :: Map.Map ID Stack
