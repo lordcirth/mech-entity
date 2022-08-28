@@ -22,11 +22,11 @@ data Meta = Meta {
   deriving (Show, Eq)
 
 data Fighter = Fighter {
-  hp        :: Int
-  ,maxHp    :: Int
+  components :: [ID]
   ,armor    :: Int
   ,maxArmor :: Int
 }
+  deriving (Show, Eq)
 
 data Consumable = Consumable
   deriving (Show, Eq)
@@ -49,7 +49,10 @@ data Weapon = Weapon {
 }
   deriving (Show, Eq)
 
-data GameStatus = Combat | LootScreen | Tinker | PathSelect | GameOver
+data GameStatus = Combat CombatSubStatus | LootScreen | Tinker | PathSelect | GameOver
+  deriving (Show, Eq)
+
+data CombatSubStatus = ReloadPrompt | PlayerTurn | EnemyTurn
   deriving (Show, Eq)
 
 data World = World {

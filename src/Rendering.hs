@@ -4,42 +4,46 @@ import qualified Brick                as B
 import           Brick.Widgets.Border
 import           Brick.Widgets.Center
 import           Components
+import           Data.Maybe           (fromJust)
 
 drawUI :: World -> [B.Widget Name]
 drawUI w
 
-  | Combat <- w.status =
+  | Combat _ <- w.status =
     drawCombatUI w
 
   | LootScreen <- w.status =
-    drawLootScreen w
+    -- drawLootScreen w
+    undefined
 
   | Tinker <- w.status =
-    drawTinkerScreen w
+    undefined
+    -- drawTinkerScreen w
 
   | PathSelect <- w.status =
-    drawPathSelect w
+    undefined
+    -- drawPathSelect w
 
   | GameOver <- w.status =
     drawGameOver w
 
 
-drawCombatUI :: GameState -> [B.Widget Name]
-drawCombatUI gameState = [
-  playerBars gameState B.<+> (hCenter $ B.str "|") B.<+> enemyBars
+drawCombatUI :: World -> [B.Widget Name]
+drawCombatUI w = [
+  playerBars w B.<+> (hCenter $ B.str "|") B.<+> enemyBars
   B.<=> menu
   B.<=> B.padTop B.Max eventList
   ]
   where
     -- drawCombatUI is only run if an enemy exists
-    enemy = fromJust $ getEnemy gameState
+    enemy = fromJust $ getEnemy w
     enemyBars = drawUnitInfo enemy.unitInfo
-    actionList = box 10 80 "Actions" $ drawActions (combatActions gameState)
-    reloadList = box 10 80 "Reload which weapon?" $ drawActions (weaponReloadActions gameState)
+    actionList = box 10 80 "Actions" $ drawActions (combatActions w)
+    reloadList = box 10 80 "Reload which weapon?" $ drawActions (weaponReloadActions w)
     eventList = box 12 200 "Event Log" $
       B.padTop B.Max $ B.padRight B.Max $ B.str $
-      unlines $ reverse $ take 10 $ gameState.eventLog
-    menu = case (gameState.status) of
+      unlines $ reverse $ take 10 $ w.eventLog
+    menu = case (w.status) of
       Combat ReloadPrompt -> reloadList
       Combat _            -> actionList
 
