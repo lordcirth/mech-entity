@@ -35,10 +35,13 @@ library
       Paths_mech_entity
   hs-source-dirs:
       src
+  ghc-options: -pgmF=record-dot-preprocessor -F
   build-depends:
       base >=4.7 && <5
     , brick
     , containers
+    , record-dot-preprocessor
+    , record-hasfield
     , transformers
     , vty
   default-language: Haskell2010
@@ -49,12 +52,14 @@ executable mech-entity-exe
       Paths_mech_entity
   hs-source-dirs:
       app
-  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -pgmF=record-dot-preprocessor -F -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
     , brick
     , containers
     , mech-entity
+    , record-dot-preprocessor
+    , record-hasfield
     , transformers
     , vty
   default-language: Haskell2010
@@ -66,12 +71,14 @@ test-suite mech-entity-test
       Paths_mech_entity
   hs-source-dirs:
       test
-  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -pgmF=record-dot-preprocessor -F -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
     , brick
     , containers
     , mech-entity
+    , record-dot-preprocessor
+    , record-hasfield
     , transformers
     , vty
   default-language: Haskell2010

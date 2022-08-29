@@ -22,6 +22,9 @@ description:         Please see the README on GitHub at <https://github.com/gith
 dependencies:
   - base >= 4.7 && < 5
   - brick
+  # Record dot syntax
+  - record-dot-preprocessor
+  - record-hasfield
   - containers
   - transformers
   - vty
@@ -39,6 +42,10 @@ executables:
     - -with-rtsopts=-N
     dependencies:
     - mech-entity
+
+ghc-options:
+  - -pgmF=record-dot-preprocessor
+  - -F
 
 tests:
   mech-entity-test:
