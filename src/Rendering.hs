@@ -4,28 +4,32 @@ import qualified Brick                as B
 import           Brick.Widgets.Border
 import           Brick.Widgets.Center
 import           Components
+import qualified Data.Map.Strict      as Map
 import           Data.Maybe           (fromJust)
 
 drawUI :: World -> [B.Widget Name]
 drawUI w
 
-  | Combat _ <- w.status =
+  | Combat _ <- s =
     drawCombatUI w
 
-  | LootScreen <- w.status =
-    -- drawLootScreen w
-    undefined
-
-  | Tinker <- w.status =
-    undefined
-    -- drawTinkerScreen w
-
-  | PathSelect <- w.status =
-    undefined
+--  | LootScreen <- w.status =
+--    -- drawLootScreen w
+--    undefined
+--
+--  | Tinker <- w.status =
+--    undefined
+--    -- drawTinkerScreen w
+--
+--  | PathSelect <- w.status =
+--    undefined
     -- drawPathSelect w
 
-  | GameOver <- w.status =
+  | GameOver <- s =
     drawGameOver w
+
+  where
+    s = w.status
 
 
 drawCombatUI :: World -> [B.Widget Name]
@@ -36,8 +40,8 @@ drawCombatUI w = [
   ]
   where
     -- drawCombatUI is only run if an enemy exists
-    enemy = fromJust $ getEnemy w
-    enemyBars = drawUnitInfo enemy.unitInfo
+    playerBars = drawUnitInfo player
+    enemyBars = drawUnitInfo maintDrone
     actionList = box 10 80 "Actions" $ drawActions (combatActions w)
     reloadList = box 10 80 "Reload which weapon?" $ drawActions (weaponReloadActions w)
     eventList = box 12 200 "Event Log" $
@@ -63,6 +67,10 @@ drawBar barName current maxSize = B.padRight (B.Pad 3) $ B.str raw
   where
     raw = barName ++ ": " ++ padInt 3 current ++ " / " ++ padInt 3 maxSize
 
+drawUnitInfo :: World -> ID -> [B.Widget Name]
+drawUnitInfo w u = show unitInfo
+  where
+    unitInfo = fromJust $ Map.lookup u (w.unit)
 
 drawGameOver :: World -> [B.Widget Name]
 drawGameOver _ = [hCenter $ vCenter $ box 3 11 "" $ B.str $ "GAME OVER"]
