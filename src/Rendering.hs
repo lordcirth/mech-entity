@@ -4,9 +4,10 @@ import qualified Brick                as B
 import           Brick.Widgets.Border
 import           Brick.Widgets.Center
 import           Components
-import           InitialState
 import qualified Data.Map.Strict      as Map
 import           Data.Maybe           (fromJust)
+import           InitialState
+import           Util
 
 drawUI :: World -> [B.Widget Name]
 drawUI w
@@ -41,15 +42,15 @@ drawCombatUI w = [
   ]
   where
     -- drawCombatUI is only run if an enemy exists
-    playerBars = drawUnitInfo player
-    enemyBars = drawUnitInfo maintDrone
+    playerBars = drawUnitInfo w player
+    enemyBars = drawUnitInfo w maintDrone
     actionList = box 10 80 "Actions" $ drawActions (combatActions w)
-    reloadList = box 10 80 "Reload which weapon?" $ drawActions (weaponReloadActions w)
+--    reloadList = box 10 80 "Reload which weapon?" $ drawActions (weaponReloadActions w)
     eventList = box 12 200 "Event Log" $
       B.padTop B.Max $ B.padRight B.Max $ B.str $
       unlines $ reverse $ take 10 $ w.eventLog
     menu = case (w.status) of
-      Combat ReloadPrompt -> reloadList
+--      Combat ReloadPrompt -> reloadList
       Combat _            -> actionList
 
 box :: Int -> Int -> String -> B.Widget Name -> B.Widget Name
@@ -72,6 +73,9 @@ drawUnitInfo :: World -> ID -> [B.Widget Name]
 drawUnitInfo w u = show unitInfo
   where
     unitInfo = fromJust $ Map.lookup u (w.unit)
+
+drawActions :: World -> [B.Widget Name]
+drawActions _ = B.str "foo"
 
 drawGameOver :: World -> [B.Widget Name]
 drawGameOver _ = [hCenter $ vCenter $ box 3 11 "" $ B.str $ "GAME OVER"]
