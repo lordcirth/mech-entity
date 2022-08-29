@@ -67,7 +67,7 @@ drawBar barName current maxSize = B.padRight (B.Pad 3) $ B.str raw
     raw = barName ++ ": " ++ padInt 3 current ++ " / " ++ padInt 3 maxSize
 
 drawUnitInfo :: World -> ID -> B.Widget Name
-drawUnitInfo w u = B.str $ show unitInfo
+drawUnitInfo w u = drawBar "Armor" (unitInfo.armor) (unitInfo.maxArmor)
   where
     unitInfo = fromJust $ Map.lookup u (w.unit)
 
