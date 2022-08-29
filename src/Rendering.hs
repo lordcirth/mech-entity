@@ -36,19 +36,16 @@ drawUI w
 
 drawCombatUI :: World -> [B.Widget Name]
 drawCombatUI w = [
-  playerBars w B.<+> (hCenter $ B.str "|") B.<+> enemyBars
+  playerBars B.<+> (hCenter $ B.str "|") B.<+> enemyBars
   B.<=> menu
-  B.<=> B.padTop B.Max eventList
+  B.<=> B.padTop B.Max (drawEventList w)
   ]
   where
     -- drawCombatUI is only run if an enemy exists
     playerBars = drawUnitInfo w player
     enemyBars = drawUnitInfo w maintDrone
-    actionList = box 10 80 "Actions" $ drawActions (combatActions w)
+    actionList = box 10 80 "Actions" $ drawActions w
 --    reloadList = box 10 80 "Reload which weapon?" $ drawActions (weaponReloadActions w)
-    eventList = box 12 200 "Event Log" $
-      B.padTop B.Max $ B.padRight B.Max $ B.str $
-      unlines $ reverse $ take 10 $ w.eventLog
     menu = case (w.status) of
 --      Combat ReloadPrompt -> reloadList
       Combat _            -> actionList
@@ -69,12 +66,18 @@ drawBar barName current maxSize = B.padRight (B.Pad 3) $ B.str raw
   where
     raw = barName ++ ": " ++ padInt 3 current ++ " / " ++ padInt 3 maxSize
 
-drawUnitInfo :: World -> ID -> [B.Widget Name]
-drawUnitInfo w u = show unitInfo
+drawUnitInfo :: World -> ID -> B.Widget Name
+drawUnitInfo w u = B.str $ show unitInfo
   where
     unitInfo = fromJust $ Map.lookup u (w.unit)
 
-drawActions :: World -> [B.Widget Name]
+drawEventList :: World -> B.Widget Name
+drawEventList w = box 12 200 "Event Log" $
+      B.padTop B.Max $ B.padRight B.Max $ B.str $
+      unlines $ reverse $ take 10 $ w.eventLog
+
+
+drawActions :: World -> B.Widget Name
 drawActions _ = B.str "foo"
 
 drawGameOver :: World -> [B.Widget Name]

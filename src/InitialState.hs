@@ -60,6 +60,7 @@ units = Map.fromList [(player, playerUnit), (maintDrone, maintDroneUnit)]
 initialState = World {
   consumable = Map.empty
   ,equip = equips
+  ,eventLog = ["Game Start"]
   ,unit = units
   ,status = Combat PlayerTurn
   ,meta = metas

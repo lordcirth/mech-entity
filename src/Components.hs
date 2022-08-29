@@ -59,6 +59,7 @@ data World = World {
   status      :: GameStatus
   ,consumable :: Map.Map ID Consumable
   ,equip      :: Map.Map ID Equipment
+  ,eventLog   :: [String]
   ,unit       :: Map.Map ID Unit
   ,meta       :: Map.Map ID Meta
   ,stack      :: Map.Map ID Stack
