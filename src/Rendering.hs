@@ -4,6 +4,7 @@ import qualified Brick                as B
 import           Brick.Widgets.Border
 import           Brick.Widgets.Center
 import           Components
+import           InitialState
 import qualified Data.Map.Strict      as Map
 import           Data.Maybe           (fromJust)
 
