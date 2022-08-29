@@ -21,10 +21,10 @@ data Meta = Meta {
 }
   deriving (Show, Eq)
 
-data Fighter = Fighter {
+data Unit = Unit {
   components :: [ID]
-  ,armor    :: Int
-  ,maxArmor :: Int
+  ,armor     :: Int
+  ,maxArmor  :: Int
 }
   deriving (Show, Eq)
 
@@ -59,7 +59,7 @@ data World = World {
   status      :: GameStatus
   ,consumable :: Map.Map ID Consumable
   ,equip      :: Map.Map ID Equipment
-  ,fighter    :: Map.Map ID Fighter
+  ,unit       :: Map.Map ID Unit
   ,meta       :: Map.Map ID Meta
   ,stack      :: Map.Map ID Stack
   ,weapon     :: Map.Map ID Weapon
