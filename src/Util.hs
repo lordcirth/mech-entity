@@ -10,3 +10,6 @@ getWeapons w u = intersect c ws
   where
     c = (fromJust $ Map.lookup u (w.unit)).components
     ws = Map.keys (w.weapon)
+
+getName :: World -> ID -> String
+getName w item = (fromJust $ Map.lookup item w.meta).name

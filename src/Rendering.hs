@@ -91,7 +91,7 @@ drawActions w items = actionList
 
 
 renderAction :: World -> Char -> ID -> B.Widget Name
-renderAction w key item = header B.<+> B.str (fromJust $ Map.lookup item w.meta).name
+renderAction w key item = header B.<+> (B.str $ getName w item)
   where
     header = B.str $ key : " | "
 

@@ -5,7 +5,6 @@ import           Components
 import           Data.Char       (intToDigit)
 import           Data.List.Index (imap)
 import qualified Data.Map.Strict as Map
-import           Data.Maybe      (fromJust)
 import qualified Graphics.Vty    as V
 import           Util
 
@@ -31,5 +30,5 @@ attackAction w actor key item = Action {
   effect  = undefined
   ,item   = Just item
   ,key    = intToDigit key
-  ,name   = (fromJust $ Map.lookup item w.meta).name
+  ,name   = getName w item
 }
