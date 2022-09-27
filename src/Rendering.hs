@@ -44,7 +44,7 @@ drawCombatUI w = [
     -- drawCombatUI is only run if an enemy exists
     playerBars = drawUnitInfo w player
     enemyBars = drawUnitInfo w maintDrone
-    actionList = box 10 80 "Actions" $ drawActions w
+    actionList = box 10 80 "Actions" $ drawActions w $ getWeapons w player
 --    reloadList = box 10 80 "Reload which weapon?" $ drawActions (weaponReloadActions w)
     menu = case (w.status) of
 --      Combat ReloadPrompt -> reloadList
@@ -77,8 +77,20 @@ drawEventList w = box 12 200 "Event Log" $
       unlines $ reverse $ take 10 $ w.eventLog
 
 
-drawActions :: World -> B.Widget Name
-drawActions _ = B.str "foo"
+drawActions :: World -> [ID] -> B.Widget Name
+drawActions w items = actionList
+  where
+    actionList :: B.Widget Name
+    actionList = (B.vBox $ map (renderAction w 'a') items)
+
+renderAction :: World -> Char -> ID -> B.Widget Name
+renderAction w key item = header B.<+> B.str (fromJust $ Map.lookup item w.meta).name
+  where
+    header = B.str $ key : " | "
+
 
 drawGameOver :: World -> [B.Widget Name]
-drawGameOver _ = [hCenter $ vCenter $ box 3 11 "" $ B.str $ "GAME OVER"]
+drawGameOver w = [
+    hCenter $ vCenter $ box 3 11 "" $ B.str $ "GAME OVER",
+    drawEventList w
+    ]
