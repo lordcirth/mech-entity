@@ -1,7 +1,8 @@
 module Components
 where
 
-import qualified Data.Map.Strict as Map
+import           Control.Monad.Trans.State (State)
+import qualified Data.Map.Strict           as Map
 
 type Name = ()
 
@@ -56,7 +57,10 @@ data CombatSubStatus = ReloadPrompt | PlayerTurn | EnemyTurn
   deriving (Show, Eq)
 
 data Action = Action {
-  -- effect = State World
+  effect :: ID -> ID -> State World ()
+  ,item  :: Maybe ID
+  ,key   :: Char
+  ,name  :: String
 }
 
 data World = World {
