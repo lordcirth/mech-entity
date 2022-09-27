@@ -55,6 +55,10 @@ data GameStatus = Combat CombatSubStatus | LootScreen | Tinker | PathSelect | Ga
 data CombatSubStatus = ReloadPrompt | PlayerTurn | EnemyTurn
   deriving (Show, Eq)
 
+data Action = Action {
+  -- effect = State World
+}
+
 data World = World {
   status      :: GameStatus
   ,consumable :: Map.Map ID Consumable

@@ -11,3 +11,11 @@ handleEvent gameState (B.VtyEvent (V.EvKey (V.KEsc) _)) = B.halt gameState
 
 -- no-op for all other inputs
 handleEvent w _                                         = B.continue w
+
+generateActions :: World -> ID -> [Action]
+generateActions w actor =
+  mainActions w actor
+
+
+mainActions :: World -> ID -> [Action]
+mainActions w actor = []
