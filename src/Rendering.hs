@@ -4,6 +4,8 @@ import qualified Brick                as B
 import           Brick.Widgets.Border
 import           Brick.Widgets.Center
 import           Components
+import           Data.Char            (intToDigit)
+import           Data.List.Index      (imap)
 import qualified Data.Map.Strict      as Map
 import           Data.Maybe           (fromJust)
 import           InitialState
@@ -66,10 +68,12 @@ drawBar barName current maxSize = B.padRight (B.Pad 3) $ B.str raw
   where
     raw = barName ++ ": " ++ padInt 3 current ++ " / " ++ padInt 3 maxSize
 
+
 drawUnitInfo :: World -> ID -> B.Widget Name
 drawUnitInfo w u = drawBar "Armor" (unitInfo.armor) (unitInfo.maxArmor)
   where
     unitInfo = fromJust $ Map.lookup u (w.unit)
+
 
 drawEventList :: World -> B.Widget Name
 drawEventList w = box 12 200 "Event Log" $
@@ -81,7 +85,10 @@ drawActions :: World -> [ID] -> B.Widget Name
 drawActions w items = actionList
   where
     actionList :: B.Widget Name
-    actionList = (B.vBox $ map (renderAction w 'a') items)
+    actionList = (B.vBox $ imap (f) items)
+    f :: Int -> (ID -> B.Widget Name)
+    f c = renderAction w (intToDigit c)
+
 
 renderAction :: World -> Char -> ID -> B.Widget Name
 renderAction w key item = header B.<+> B.str (fromJust $ Map.lookup item w.meta).name

@@ -41,6 +41,7 @@ library
       base >=4.7 && <5
     , brick
     , containers
+    , ilist
     , record-dot-preprocessor
     , record-hasfield
     , transformers
@@ -58,6 +59,7 @@ executable mech-entity-exe
       base >=4.7 && <5
     , brick
     , containers
+    , ilist
     , mech-entity
     , record-dot-preprocessor
     , record-hasfield
@@ -77,6 +79,7 @@ test-suite mech-entity-test
       base >=4.7 && <5
     , brick
     , containers
+    , ilist
     , mech-entity
     , record-dot-preprocessor
     , record-hasfield
