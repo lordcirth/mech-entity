@@ -1,9 +1,10 @@
 module Util where
 
 import           Components
-import           Data.List       (intersect)
-import qualified Data.Map.Strict as Map
-import           Data.Maybe      (fromJust)
+import           Control.Monad.Trans.State (State, execState, get, put)
+import           Data.List                 (intersect)
+import qualified Data.Map.Strict           as Map
+import           Data.Maybe                (fromJust)
 
 getWeapons :: World -> ID -> [ID]
 getWeapons w u = intersect c ws
@@ -13,3 +14,15 @@ getWeapons w u = intersect c ws
 
 getName :: World -> ID -> String
 getName w item = (fromJust $ Map.lookup item w.meta).name
+
+updateStatus :: State World GameStatus
+updateStatus = do
+  w <- get
+  put $ w{status = checkStatus w}
+  return $ checkStatus w
+
+checkStatus :: World -> GameStatus
+checkStatus gameState
+    -- | isDead (gameState.player) = GameOver
+    -- | isDead (fromJust $ getEnemy gameState) = LootScreen
+    | otherwise = gameState.status
