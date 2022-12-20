@@ -45,7 +45,7 @@ drawCombatUI w = [
   where
     -- drawCombatUI is only run if an enemy exists
     playerBars = drawUnitInfo w player
-    enemyBars = drawUnitInfo w maintDrone
+    enemyBars = drawUnitInfo w (getEnemy w)
     actionList = box 10 80 "Actions" $ drawActions w $ getWeapons w player
 --    reloadList = box 10 80 "Reload which weapon?" $ drawActions (weaponReloadActions w)
     menu = case (w.status) of
@@ -70,9 +70,13 @@ drawBar barName current maxSize = B.padRight (B.Pad 3) $ B.str raw
 
 
 drawUnitInfo :: World -> ID -> B.Widget Name
-drawUnitInfo w u = drawBar "Armor" (unitInfo.armor) (unitInfo.maxArmor)
+drawUnitInfo w u =
+  drawBar "Armor" (unitInfo.armor) (unitInfo.maxArmor)
+  B.<=>
+  drawBar "Health" (equipInfo.hp) (equipInfo.maxHp)
   where
     unitInfo = fromJust $ Map.lookup u (w.unit)
+    equipInfo = fromJust $ Map.lookup u (w.equip)
 
 
 drawEventList :: World -> B.Widget Name

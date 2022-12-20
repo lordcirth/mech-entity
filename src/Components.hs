@@ -34,6 +34,7 @@ data Consumable = Consumable
 
 data Equipment = Equipment {
   hp     :: Int
+  ,maxHp :: Int
   ,mass  :: Int -- kg
   ,slots :: Int
 }

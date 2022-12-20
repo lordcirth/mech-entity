@@ -8,10 +8,14 @@ scrapMetal = ID 001
 
 player = ID 0
 maintDrone = ID 1001
-maintDroneChassis = ID 2001
+maintDroneChassis = maintDrone
 
-playerChassis = ID 90
-playerArmor = ID 91
+
+playerChassis = player
+
+
+-- playerChassis = ID 90
+-- playerArmor = ID 91
 
 primitive20mmCannon = ID 101
 
@@ -23,11 +27,11 @@ metas = Map.fromList [
 
 equips :: Map.Map ID Equipment
 equips = Map.fromList [
-  (playerChassis, Equipment {hp = 15, mass = 15, slots = 15})
-  ,(maintDroneChassis, Equipment {hp = 10, mass = 10, slots = 10})
+  (playerChassis, Equipment {hp = 15, maxHp = 15, mass = 15, slots = 15})
+  ,(maintDroneChassis, Equipment {hp = 10, maxHp = 10, mass = 10, slots = 10})
   -- Hits are never rolled directly to armor
   -- ,(playerArmor, Equipment {hp = 15, mass = 10, slots = 0})
-  ,(primitive20mmCannon, Equipment {hp = 5, mass = 5, slots = 3})
+  ,(primitive20mmCannon, Equipment {hp = 5, maxHp = 5, mass = 5, slots = 3})
   ]
 
 stacks :: Map.Map ID Stack
