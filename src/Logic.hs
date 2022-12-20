@@ -47,10 +47,10 @@ playerTurn keyPress = do
   gameState <- get
   --doAction $ matchKey (availableActions gameState) keyPress
   return ()
-  where
-    availableActions gs = case (gs.status) of
-      --Combat ReloadPrompt -> weaponReloadActions gs
-      Combat _            -> combatActions gs
+--  where
+--    availableActions gs = case (gs.status) of
+--      Combat ReloadPrompt -> weaponReloadActions gs
+--      Combat _            -> combatActions gs
 
 
 mainActions :: World -> ID -> [Action]
@@ -74,7 +74,7 @@ attackAction w actor key item = Action {
 applyDamage :: Int -> ID -> State World ()
 applyDamage dmg target = do
   w <- get
-  let e = fromJust $ Map.lookup target w.equip
-  let newEquip = e{hp = hp - dmg}
+  let e = fromJust $ Map.lookup target w.equip :: Equipment
+  let newEquip = e{hp = e.hp - dmg} :: Equipment
 
   put $ w{equip = (Map.insert target newEquip w.equip)}
