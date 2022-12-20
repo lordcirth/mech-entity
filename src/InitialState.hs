@@ -17,11 +17,13 @@ playerChassis = player
 -- playerChassis = ID 90
 -- playerArmor = ID 91
 
+fist = ID 100
 primitive20mmCannon = ID 101
 
 metas :: Map.Map ID Meta
 metas = Map.fromList [
   (scrapMetal, Meta {name = "Scrap Metal", description = "Basic Crafting Material"})
+  ,(fist, Meta {name = "Fist", description = ""})
   ,(primitive20mmCannon, Meta {name = "Primitive 20mm Cannon", description = "Single-shot cannon"})
   ]
 
@@ -31,6 +33,7 @@ equips = Map.fromList [
   ,(maintDroneChassis, Equipment {hp = 10, maxHp = 10, mass = 10, slots = 10})
   -- Hits are never rolled directly to armor
   -- ,(playerArmor, Equipment {hp = 15, mass = 10, slots = 0})
+  ,(fist, Equipment {hp = 0, maxHp = 0, mass = 0, slots = 0})
   ,(primitive20mmCannon, Equipment {hp = 5, maxHp = 5, mass = 5, slots = 3})
   ]
 
@@ -41,12 +44,13 @@ stacks = Map.fromList [
 
 weapons :: Map.Map ID Weapon
 weapons = Map.fromList [
+  (fist, Weapon {damage = newDamage 1 4 0}),
   (primitive20mmCannon, Weapon {damage = newDamage 1 6 2})
   ]
 
 playerUnit :: Unit
 playerUnit = Unit {
-  components = [playerChassis, primitive20mmCannon]
+  components = [playerChassis, fist, primitive20mmCannon]
   ,armor = 15
   ,maxArmor = 15
 }
