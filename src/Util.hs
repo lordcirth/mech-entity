@@ -4,7 +4,11 @@ import           Components
 import           Control.Monad.Trans.State (State, execState, get, put)
 import           Data.List                 (intersect)
 import qualified Data.Map.Strict           as Map
-import           Data.Maybe                (fromJust)
+import           Data.Maybe                (fromJust, listToMaybe)
+import           InitialState              (maintDrone, player)
+
+getEnemy :: World -> ID
+getEnemy w = maintDrone -- TODO
 
 getWeapons :: World -> ID -> [ID]
 getWeapons w u = intersect c ws
@@ -26,3 +30,11 @@ checkStatus gameState
     -- | isDead (gameState.player) = GameOver
     -- | isDead (fromJust $ getEnemy gameState) = LootScreen
     | otherwise = gameState.status
+
+matchKey :: [Action] -> Char -> Maybe Action
+matchKey acts c = listToMaybe $ filter (\a -> a.key == c) acts
+
+
+doAction :: Maybe Action -> State World ()
+doAction Nothing       = return ()
+doAction (Just action) = action.effect

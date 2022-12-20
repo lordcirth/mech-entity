@@ -57,7 +57,7 @@ data CombatSubStatus = ReloadPrompt | PlayerTurn | EnemyTurn
   deriving (Show, Eq)
 
 data Action = Action {
-  effect :: ID -> ID -> State World ()
+  effect :: State World ()
   ,item  :: Maybe ID
   ,key   :: Char
   ,name  :: String

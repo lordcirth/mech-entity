@@ -8,6 +8,7 @@ import           Data.List.Index           (imap)
 import qualified Data.Map.Strict           as Map
 import           Data.Maybe                (fromJust)
 import qualified Graphics.Vty              as V
+import           InitialState              (player)
 import           Util
 
 
@@ -25,10 +26,10 @@ handleEvent gameState (B.VtyEvent (V.EvKey (V.KChar keyPress) _)) =
 -- no-op for all other inputs
 handleEvent w _                                         = B.continue w
 
-
-generateActions :: World -> ID -> [Action]
-generateActions w actor =
-  mainActions w actor
+--
+--generateActions :: World -> ID -> [Action]
+--generateActions w actor =
+--  mainActions w actor
 
 
 combatTurn :: Char -> State World ()
@@ -44,22 +45,22 @@ combatTurn keyPress = do
 
 playerTurn :: Char -> State World ()
 playerTurn keyPress = do
-  gameState <- get
-  --doAction $ matchKey (availableActions gameState) keyPress
+  w <- get
+  doAction $ matchKey (availableActions w player (getEnemy w)) keyPress
   return ()
---  where
---    availableActions gs = case (gs.status) of
---      Combat ReloadPrompt -> weaponReloadActions gs
---      Combat _            -> combatActions gs
+  where
+    availableActions w = case (w.status) of
+--      Combat ReloadPrompt -> weaponReloadActions w
+      Combat _            -> combatActions w
 
 
-mainActions :: World -> ID -> [Action]
-mainActions w actor = imap (attackAction w actor) $ getWeapons w actor
+combatActions :: World -> ID -> ID -> [Action]
+combatActions w actor target = imap (attackAction w actor target) $ getWeapons w actor
 
 
-attackAction :: World -> ID -> Int -> ID  -> Action
-attackAction w actor key item = Action {
-  effect  = attackEffect
+attackAction :: World -> ID -> ID -> Int -> ID -> Action
+attackAction w actor item key target = Action {
+  effect  = attackEffect actor target
   ,item   = Just item
   ,key    = intToDigit key
   ,name   = getName w item
