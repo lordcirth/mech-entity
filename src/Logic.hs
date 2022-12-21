@@ -69,6 +69,7 @@ attackAction w actor item key target = Action {
     -- Target is assumed to be a Unit
     attackEffect :: ID -> ID -> State World ()
     attackEffect actor target = do
+      event "Attack"
       applyDamage 1 target
 
 

@@ -38,3 +38,8 @@ matchKey acts c = listToMaybe $ filter (\a -> a.key == c) acts
 doAction :: Maybe Action -> State World ()
 doAction Nothing       = return ()
 doAction (Just action) = action.effect
+
+event :: String -> State World ()
+event msg = do
+  w <- get
+  put w{eventLog = msg:w.eventLog}
