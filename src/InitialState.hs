@@ -23,6 +23,8 @@ primitive20mmCannon = ID 101
 metas :: Map.Map ID Meta
 metas = Map.fromList [
   (scrapMetal, Meta {name = "Scrap Metal", description = "Basic Crafting Material"})
+  ,(maintDrone, Meta {name = "Maintenance Drone", description = "" })
+  ,(player, Meta {name = "Player", description = "Player"})
   ,(fist, Meta {name = "Fist", description = ""})
   ,(primitive20mmCannon, Meta {name = "Primitive 20mm Cannon", description = "Single-shot cannon"})
   ]

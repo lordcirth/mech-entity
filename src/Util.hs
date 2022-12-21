@@ -17,7 +17,7 @@ getWeapons w u = intersect c ws
     ws = Map.keys (w.weapon)
 
 getName :: World -> ID -> String
-getName w item = (fromJust $ Map.lookup item w.meta).name
+getName w item = maybe "UNDEFINED" (\m -> m.name) (Map.lookup item w.meta)
 
 updateStatus :: State World GameStatus
 updateStatus = do

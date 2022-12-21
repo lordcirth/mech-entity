@@ -59,7 +59,7 @@ combatActions w actor target = imap (attackAction w actor target) $ getWeapons w
 
 
 attackAction :: World -> ID -> ID -> Int -> ID -> Action
-attackAction w actor item key target = Action {
+attackAction w actor target key item = Action {
   effect  = attackEffect actor target
   ,item   = Just item
   ,key    = intToDigit key
@@ -69,7 +69,8 @@ attackAction w actor item key target = Action {
     -- Target is assumed to be a Unit
     attackEffect :: ID -> ID -> State World ()
     attackEffect actor target = do
-      event "Attack"
+      event $ (show $ getName w actor) ++ " attacks " ++
+        (show $ getName w target)
       applyDamage 1 target
 
 
