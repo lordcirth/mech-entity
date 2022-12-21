@@ -10,6 +10,13 @@ import           InitialState              (maintDrone, player)
 getEnemy :: World -> ID
 getEnemy w = maintDrone -- TODO
 
+getPlayer :: World -> ID
+getPlayer w = player
+
+isDead :: World -> ID -> Bool
+isDead w u =
+  (fromJust $ Map.lookup u w.equip).hp <= 0
+
 getWeapons :: World -> ID -> [ID]
 getWeapons w u = intersect c ws
   where
@@ -26,10 +33,10 @@ updateStatus = do
   return $ checkStatus w
 
 checkStatus :: World -> GameStatus
-checkStatus gameState
-    -- | isDead (gameState.player) = GameOver
-    -- | isDead (fromJust $ getEnemy gameState) = LootScreen
-    | otherwise = gameState.status
+checkStatus w
+    | isDead w (getPlayer w) = GameOver
+    -- | isDead (fromJust $ getEnemy w) = LootScreen
+    | otherwise = w.status
 
 matchKey :: [Action] -> Char -> Maybe Action
 matchKey acts c = listToMaybe $ filter (\a -> a.key == c) acts
