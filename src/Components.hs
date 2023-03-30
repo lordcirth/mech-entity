@@ -23,9 +23,10 @@ data Meta = Meta {
   deriving (Show, Eq)
 
 data Unit = Unit {
-  components :: [ID]
-  ,armor     :: Int
-  ,maxArmor  :: Int
+  components  :: [ID]
+  ,armor      :: Int
+  ,maxArmor   :: Int
+  ,loot       :: [ID]
 }
   deriving (Show, Eq)
 
@@ -33,10 +34,10 @@ data Consumable = Consumable
   deriving (Show, Eq)
 
 data Equipment = Equipment {
-  hp     :: Int
-  ,maxHp     :: Int
-  ,mass  :: Int -- kg
-  ,slots :: Int
+  hp      :: Int
+  ,maxHp  :: Int
+  ,mass   :: Int -- kg
+  ,slots  :: Int
 }
   deriving (Show, Eq)
 

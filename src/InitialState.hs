@@ -55,12 +55,14 @@ playerUnit = Unit {
   components = [playerChassis, fist, primitive20mmCannon]
   ,armor = 15
   ,maxArmor = 15
+  ,loot = []
 }
 
 maintDroneUnit = Unit {
   components = []
   ,armor = 5
   ,maxArmor = 5
+  ,loot = [scrapMetal]
 }
 
 

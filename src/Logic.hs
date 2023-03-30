@@ -75,6 +75,8 @@ attackAction w actor target key item = Action {
 
 lootActions :: World -> ID -> ID -> [Action]
 lootActions w actor target = imap (lootAction w actor target) loot
+  where
+    loot = (fromJust $ Map.lookup (getEnemy w) w.unit).loot
 
 lootAction :: World -> ID -> ID -> Int -> ID -> Action
 lootAction w actor target key item = Action {
