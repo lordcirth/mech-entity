@@ -74,5 +74,6 @@ data World = World {
   ,meta       :: Map.Map ID Meta
   ,stack      :: Map.Map ID Stack
   ,weapon     :: Map.Map ID Weapon
+  ,currentLoot :: [ID]
 }
   deriving (Show, Eq)

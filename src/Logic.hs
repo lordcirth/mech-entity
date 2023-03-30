@@ -4,7 +4,7 @@ import qualified Brick                     as B
 import           Components
 import           Control.Monad.Trans.State (State, execState, get, put)
 import           Data.Char                 (intToDigit)
-import           Data.List.Index           (imap)
+import           Data.List.Index           (deleteAt, imap)
 import qualified Data.Map.Strict           as Map
 import           Data.Maybe                (fromJust)
 import qualified Graphics.Vty              as V
@@ -51,8 +51,8 @@ playerTurn keyPress = do
   where
     availableActions w = case (w.status) of
 --      Combat ReloadPrompt -> weaponReloadActions w
-      Combat _            -> combatActions w
-      LootScreen          -> lootActions w
+      Combat _   -> combatActions w
+      LootScreen -> lootActions w
 
 
 combatActions :: World -> ID -> ID -> [Action]
@@ -73,14 +73,17 @@ attackAction w actor target key item = Action {
         (show $ getName w target)
       applyDamage 1 target
 
+
 lootActions :: World -> ID -> ID -> [Action]
-lootActions w actor target = imap (lootAction w actor target) loot
-  where
-    loot = (fromJust $ Map.lookup (getEnemy w) w.unit).loot
+lootActions w actor target = imap (lootAction w actor target) w.currentLoot
 
 lootAction :: World -> ID -> ID -> Int -> ID -> Action
 lootAction w actor target key item = Action {
-  effect  = addItem item 1
+  effect  = do
+    addItem item 1
+    w <- get
+    let newLoot = deleteAt key w.currentLoot
+    put w{currentLoot = newLoot}
   ,item   = Just item
   ,key    = intToDigit key
   ,name   = getName w item

@@ -26,11 +26,17 @@ getWeapons w u = intersect c ws
 getName :: World -> ID -> String
 getName w item = maybe "UNDEFINED" (\m -> m.name) (Map.lookup item w.meta)
 
-updateStatus :: State World GameStatus
+updateStatus :: State World Bool
 updateStatus = do
   w <- get
-  put $ w{status = checkStatus w}
-  return $ checkStatus w
+  let oldStatus = w.status
+  let newStatus = checkStatus w
+  if newStatus /= oldStatus then do
+    let newLoot = (fromJust $ Map.lookup (getEnemy w) w.unit).loot
+    put $ w{status = newStatus, currentLoot = newLoot}
+    return True
+  else do
+    return False
 
 checkStatus :: World -> GameStatus
 checkStatus w
@@ -55,7 +61,8 @@ addItem :: ID -> Int -> State World ()
 addItem item n = do 
   w <- get
   let s = Map.lookup item w.stack
-  let c = maybe 0 (\x -> x.num) s
+  let c = n + (maybe 0 (\x -> x.num) s)
 
   let newStack = Stack{num = c}
   put $ w{stack = Map.insert item newStack w.stack}
+  event $ "Gained item, new total: " ++ show c
