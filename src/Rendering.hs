@@ -58,9 +58,8 @@ drawLootScreen w = [
   B.<=> B.padTop B.Max (drawEventList w)
   ]
   where
-    items = [scrapMetal] -- TODO
     playerBars = drawUnitInfo w player
-    menu = (B.vBox $ imap (f) items)
+    menu = box 10 80 "Loot" $ drawActions w $ w.currentLoot
     f :: Int -> (ID -> B.Widget Name)
     f c = renderAction w (intToDigit c)
 
