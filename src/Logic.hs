@@ -52,11 +52,11 @@ playerTurn keyPress = do
     availableActions w = case (w.status) of
 --      Combat ReloadPrompt -> weaponReloadActions w
       Combat _            -> combatActions w
+      LootScreen          -> lootActions w
 
 
 combatActions :: World -> ID -> ID -> [Action]
 combatActions w actor target = imap (attackAction w actor target) $ getWeapons w actor
-
 
 attackAction :: World -> ID -> ID -> Int -> ID -> Action
 attackAction w actor target key item = Action {
@@ -72,6 +72,17 @@ attackAction w actor target key item = Action {
       event $ (show $ getName w actor) ++ " attacks " ++
         (show $ getName w target)
       applyDamage 1 target
+
+lootActions :: World -> ID -> ID -> [Action]
+lootActions w actor target = imap (lootAction w actor target) loot
+
+lootAction :: World -> ID -> ID -> Int -> ID -> Action
+lootAction w actor target key item = Action {
+  effect  = addItem item 1
+  ,item   = Just item
+  ,key    = intToDigit key
+  ,name   = getName w item
+}
 
 
 applyDamage :: Int -> ID -> State World ()

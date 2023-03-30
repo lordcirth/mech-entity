@@ -50,3 +50,12 @@ event :: String -> State World ()
 event msg = do
   w <- get
   put w{eventLog = msg:w.eventLog}
+
+addItem :: ID -> Int -> State World ()
+addItem item n = do 
+  w <- get
+  let s = Map.lookup item w.stack
+  let c = maybe 0 (\x -> x.num) s
+
+  let newStack = Stack{num = c}
+  put $ w{stack = Map.insert item newStack w.stack}
