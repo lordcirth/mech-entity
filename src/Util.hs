@@ -35,7 +35,7 @@ updateStatus = do
 checkStatus :: World -> GameStatus
 checkStatus w
     | isDead w (getPlayer w) = GameOver
-    -- | isDead (fromJust $ getEnemy w) = LootScreen
+    | isDead w (getEnemy w) = LootScreen
     | otherwise = w.status
 
 matchKey :: [Action] -> Char -> Maybe Action

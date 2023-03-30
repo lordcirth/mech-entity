@@ -17,10 +17,9 @@ drawUI w
   | Combat _ <- s =
     drawCombatUI w
 
---  | LootScreen <- w.status =
---    -- drawLootScreen w
---    undefined
---
+  | LootScreen <- w.status =
+    drawLootScreen w
+
 --  | Tinker <- w.status =
 --    undefined
 --    -- drawTinkerScreen w
@@ -51,6 +50,20 @@ drawCombatUI w = [
     menu = case (w.status) of
 --      Combat ReloadPrompt -> reloadList
       Combat _            -> actionList
+
+drawLootScreen :: World -> [B.Widget Name]
+drawLootScreen w = [
+  playerBars
+  B.<=> menu
+  B.<=> B.padTop B.Max (drawEventList w)
+  ]
+  where
+    items = [scrapMetal] -- TODO
+    playerBars = drawUnitInfo w player
+    menu = (B.vBox $ imap (f) items)
+    f :: Int -> (ID -> B.Widget Name)
+    f c = renderAction w (intToDigit c)
+
 
 box :: Int -> Int -> String -> B.Widget Name -> B.Widget Name
 box v h title widget = B.vLimit v $ B.hLimit h $ borderWithLabel (B.str title) widget
