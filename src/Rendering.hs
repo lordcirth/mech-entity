@@ -45,7 +45,7 @@ drawCombatUI w = [
     -- drawCombatUI is only run if an enemy exists
     playerBars = drawUnitInfo w player
     enemyBars = drawUnitInfo w (getEnemy w)
-    actionList = box 10 80 "Actions" $ drawActions w $ getWeapons w player
+    actionList = box 10 80 "Actions" $ drawActions w $ combatActions w player (getEnemy w)
 --    reloadList = box 10 80 "Reload which weapon?" $ drawActions (weaponReloadActions w)
     menu = case (w.status) of
 --      Combat ReloadPrompt -> reloadList
@@ -59,10 +59,7 @@ drawLootScreen w = [
   ]
   where
     playerBars = drawUnitInfo w player
-    menu = box 10 80 "Loot" $ drawActions w $ w.currentLoot
-    f :: Int -> (ID -> B.Widget Name)
-    f c = renderAction w (intToDigit c)
-
+    menu = box 10 80 "Loot" $ drawActions w $ lootActions w player (getEnemy w)
 
 box :: Int -> Int -> String -> B.Widget Name -> B.Widget Name
 box v h title widget = B.vLimit v $ B.hLimit h $ borderWithLabel (B.str title) widget
@@ -97,17 +94,17 @@ drawEventList w = box 12 200 "Event Log" $
       unlines $ reverse $ take 10 $ w.eventLog
 
 
-drawActions :: World -> [ID] -> B.Widget Name
-drawActions w items = actionList
+drawActions :: World -> [Action] -> B.Widget Name
+drawActions w actions = actionList
   where
     actionList :: B.Widget Name
-    actionList = (B.vBox $ imap (f) items)
-    f :: Int -> (ID -> B.Widget Name)
+    actionList = (B.vBox $ imap (f) actions)
+    f :: Int -> (Action -> B.Widget Name)
     f c = renderAction w (intToDigit c)
 
 
-renderAction :: World -> Char -> ID -> B.Widget Name
-renderAction w key item = header B.<+> (B.str $ getName w item)
+renderAction :: World -> Char -> Action -> B.Widget Name
+renderAction w key action = header B.<+> (B.str $ action.name)
   where
     header = B.str $ key : " | "
 

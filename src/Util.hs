@@ -2,7 +2,9 @@ module Util where
 
 import           Components
 import           Control.Monad.Trans.State (State, execState, get, put)
+import           Data.Char                 (intToDigit)
 import           Data.List                 (intersect)
+import           Data.List.Index           (deleteAt, imap)
 import qualified Data.Map.Strict           as Map
 import           Data.Maybe                (fromJust, listToMaybe)
 import           InitialState              (maintDrone, player)
@@ -22,6 +24,31 @@ getWeapons w u = intersect c ws
   where
     c = (fromJust $ Map.lookup u (w.unit)).components
     ws = Map.keys (w.weapon)
+
+applyDamage :: Int -> ID -> State World ()
+applyDamage dmg target = do
+  w <- get
+  let e = fromJust $ Map.lookup target w.equip :: Equipment
+  let newEquip = e{hp = e.hp - dmg} :: Equipment
+
+  put $ w{equip = (Map.insert target newEquip w.equip)}
+combatActions :: World -> ID -> ID -> [Action]
+combatActions w actor target = imap (attackAction w actor target) $ getWeapons w actor
+
+lootActions :: World -> ID -> ID -> [Action]
+lootActions w actor target = imap (lootAction w actor target) w.currentLoot
+
+lootAction :: World -> ID -> ID -> Int -> ID -> Action
+lootAction w actor target key item = Action {
+  effect  = do
+    addItem item 1
+    w <- get
+    let newLoot = deleteAt key w.currentLoot
+    put w{currentLoot = newLoot}
+  ,item   = Just item
+  ,key    = intToDigit key
+  ,name   = getName w item
+}
 
 getName :: World -> ID -> String
 getName w item = maybe "UNDEFINED" (\m -> m.name) (Map.lookup item w.meta)
@@ -58,7 +85,7 @@ event msg = do
   put w{eventLog = msg:w.eventLog}
 
 addItem :: ID -> Int -> State World ()
-addItem item n = do 
+addItem item n = do
   w <- get
   let s = Map.lookup item w.stack
   let c = n + (maybe 0 (\x -> x.num) s)
@@ -66,3 +93,19 @@ addItem item n = do
   let newStack = Stack{num = c}
   put $ w{stack = Map.insert item newStack w.stack}
   event $ "Gained item, new total: " ++ show c
+
+attackAction :: World -> ID -> ID -> Int -> ID -> Action
+attackAction w actor target key item = Action {
+  effect  = attackEffect actor target
+  ,item   = Just item
+  ,key    = intToDigit key
+  ,name   = getName w item
+}
+  where
+    -- Target is assumed to be a Unit
+    attackEffect :: ID -> ID -> State World ()
+    attackEffect actor target = do
+      event $ (show $ getName w actor) ++ " attacks " ++
+        (show $ getName w target)
+      applyDamage 1 target
+
