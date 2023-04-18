@@ -70,7 +70,8 @@ data PathNode = PathNode {
   branches :: [PathNode]
   ,enemy   :: Maybe ID
 }
-  deriving (Show, Eq)
+instance Show (PathNode) where
+  show p = show p.enemy
 
 data World = World {
   status       :: GameStatus
@@ -84,4 +85,4 @@ data World = World {
   ,currentLoot :: [ID]
   ,location    :: PathNode
 }
-  deriving (Show, Eq)
+  deriving (Show)
