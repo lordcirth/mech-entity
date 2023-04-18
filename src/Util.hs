@@ -52,7 +52,7 @@ combatActions :: World -> ID -> ID -> [Action]
 combatActions w actor target = imap (attackAction w actor target) $ getWeapons w actor
 
 lootActions :: World -> ID -> ID -> [Action]
-lootActions w actor target = imap (lootAction w actor target) w.currentLoot ++ doneLoot
+lootActions w actor target = doneLoot w : imap (lootAction w actor target) w.currentLoot
 
 doneLoot :: World -> Action
 doneLoot w = Action {

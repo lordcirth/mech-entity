@@ -1,3 +1,4 @@
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 module Components
 where
 
@@ -7,7 +8,7 @@ import qualified Data.Map.Strict           as Map
 type Name = ()
 
 newtype ID = ID Int
-  deriving (Show, Eq, Ord)
+  deriving (Show, Eq, Ord, Num, Enum, Real, Integral)
 
 data Damage = Damage {
   dieNum   :: Int
@@ -23,10 +24,10 @@ data Meta = Meta {
   deriving (Show, Eq)
 
 data Unit = Unit {
-  components  :: [ID]
-  ,armor      :: Int
-  ,maxArmor   :: Int
-  ,loot       :: [ID]
+  components :: [ID]
+  ,armor     :: Int
+  ,maxArmor  :: Int
+  ,loot      :: [ID]
 }
   deriving (Show, Eq)
 
@@ -34,10 +35,10 @@ data Consumable = Consumable
   deriving (Show, Eq)
 
 data Equipment = Equipment {
-  hp      :: Int
-  ,maxHp  :: Int
-  ,mass   :: Int -- kg
-  ,slots  :: Int
+  hp     :: Int
+  ,maxHp :: Int
+  ,mass  :: Int -- kg
+  ,slots :: Int
 }
   deriving (Show, Eq)
 
@@ -66,14 +67,14 @@ data Action = Action {
 }
 
 data World = World {
-  status      :: GameStatus
-  ,consumable :: Map.Map ID Consumable
-  ,equip      :: Map.Map ID Equipment
-  ,eventLog   :: [String]
-  ,unit       :: Map.Map ID Unit
-  ,meta       :: Map.Map ID Meta
-  ,stack      :: Map.Map ID Stack
-  ,weapon     :: Map.Map ID Weapon
+  status       :: GameStatus
+  ,consumable  :: Map.Map ID Consumable
+  ,equip       :: Map.Map ID Equipment
+  ,eventLog    :: [String]
+  ,unit        :: Map.Map ID Unit
+  ,meta        :: Map.Map ID Meta
+  ,stack       :: Map.Map ID Stack
+  ,weapon      :: Map.Map ID Weapon
   ,currentLoot :: [ID]
 }
   deriving (Show, Eq)
