@@ -78,4 +78,5 @@ initialState = World {
   ,meta = metas
   ,stack = stacks -- Multiple items per instance
   ,weapon = weapons
+  ,currentLoot = []
 }

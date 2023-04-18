@@ -9,6 +9,22 @@ import qualified Data.Map.Strict           as Map
 import           Data.Maybe                (fromJust, listToMaybe)
 import           InitialState              (maintDrone, player)
 
+-- Make a copy of all object properties and return new ID
+clone :: ID -> State World ID
+clone templateID = do
+  f consumable
+  f equip
+  f unit
+  f meta
+  f stack
+  f weapon
+  return newID
+
+  where
+    newID = templateID + 1000 -- TODO
+    f :: (World -> Map.Map ID a) -> State World ()
+    f m = undefined
+
 getEnemy :: World -> ID
 getEnemy w = maintDrone -- TODO
 
@@ -36,7 +52,21 @@ combatActions :: World -> ID -> ID -> [Action]
 combatActions w actor target = imap (attackAction w actor target) $ getWeapons w actor
 
 lootActions :: World -> ID -> ID -> [Action]
-lootActions w actor target = imap (lootAction w actor target) w.currentLoot
+lootActions w actor target = imap (lootAction w actor target) w.currentLoot ++ doneLoot
+
+doneLoot :: World -> Action
+doneLoot w = Action {
+  effect = do
+    w <- get
+    -- discard remaining loot & leave screen
+    put w{currentLoot = [] }
+
+
+  ,item = Nothing
+  ,key = '.'
+  ,name = "Leave"
+}
+
 
 lootAction :: World -> ID -> ID -> Int -> ID -> Action
 lootAction w actor target key item = Action {
