@@ -67,7 +67,7 @@ drawTinkerScreen w = [
   ]
   where
     playerBars = drawUnitInfo w player
-    menu = box 10 80 "Tinkering" $ drawActions w $ []
+    menu = box 10 80 "Tinkering" $ drawActions w $ tinkerActions w player player
 
 drawPathSelectScreen :: World -> [B.Widget Name]
 drawPathSelectScreen w = [
