@@ -74,9 +74,10 @@ initialState = World {
   ,equip = equips
   ,eventLog = ["Game Start"]
   ,unit = units
-  ,status = Combat PlayerTurn
+  ,status = PathSelect
   ,meta = metas
   ,stack = stacks -- Multiple items per instance
   ,weapon = weapons
   ,currentLoot = []
+  ,paths = [PathNode {enemy = Just maintDrone, branches = []}]
 }

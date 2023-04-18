@@ -22,10 +22,9 @@ drawUI w
 
   | Tinker <- w.status =
     drawTinkerScreen w
---
---  | PathSelect <- w.status =
---    undefined
-    -- drawPathSelect w
+
+  | PathSelect <- w.status =
+    drawPathSelectScreen w
 
   | GameOver <- s =
     drawGameOver w
@@ -70,6 +69,15 @@ drawTinkerScreen w = [
     playerBars = drawUnitInfo w player
     menu = box 10 80 "Tinkering" $ drawActions w $ []
 
+drawPathSelectScreen :: World -> [B.Widget Name]
+drawPathSelectScreen w = [
+  playerBars
+  B.<=> menu
+  B.<=> B.padTop B.Max (drawEventList w)
+  ]
+  where
+    playerBars = drawUnitInfo w player
+    menu = box 10 80 "Choose a path" $ drawActions w $ []
 
 box :: Int -> Int -> String -> B.Widget Name -> B.Widget Name
 box v h title widget = B.vLimit v $ B.hLimit h $ borderWithLabel (B.str title) widget

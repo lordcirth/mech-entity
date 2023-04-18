@@ -66,6 +66,12 @@ data Action = Action {
   ,name  :: String
 }
 
+data PathNode = PathNode {
+  branches :: [PathNode]
+  ,enemy   :: Maybe ID
+}
+  deriving (Show, Eq)
+
 data World = World {
   status       :: GameStatus
   ,consumable  :: Map.Map ID Consumable
@@ -76,5 +82,6 @@ data World = World {
   ,stack       :: Map.Map ID Stack
   ,weapon      :: Map.Map ID Weapon
   ,currentLoot :: [ID]
+  ,paths       :: [PathNode]
 }
   deriving (Show, Eq)
