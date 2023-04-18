@@ -65,7 +65,7 @@ doneLoot w = Action {
 
   ,item = Nothing
   ,key = '.'
-  ,name = "Leave"
+  ,name = "Done looting"
 }
 
 
@@ -79,6 +79,19 @@ lootAction w actor target key item = Action {
   ,item   = Just item
   ,key    = intToDigit key
   ,name   = getName w item
+}
+
+tinkerActions :: World -> ID -> ID -> [Action]
+tinkerActions w actor target = doneTinker w : [] -- imap (tinkerAction w actor target) w.currentLoot
+
+doneTinker :: World -> Action
+doneTinker w = Action {
+  effect = do
+    setStatus PathSelect
+
+  ,item = Nothing
+  ,key = '.'
+  ,name = "Done tinkering"
 }
 
 pathActions :: World -> ID -> ID -> [Action]

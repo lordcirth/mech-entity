@@ -15,13 +15,14 @@ import           Util
 handleEvent :: World -> B.BrickEvent Name () -> B.EventM Name (B.Next World)
 
 -- Halt on ESC
-handleEvent gameState (B.VtyEvent (V.EvKey (V.KEsc) _)) = B.halt gameState
+handleEvent w (B.VtyEvent (V.EvKey (V.KEsc) _)) = B.halt w
 
-handleEvent gameState (B.VtyEvent (V.EvKey (V.KChar keyPress) _)) =
-  process combatTurn
+handleEvent w (B.VtyEvent (V.EvKey (V.KChar keyPress) _))
+  | Combat a <- w.status = process combatTurn
+  | otherwise = process playerTurn
     where
       process :: (Char -> State World ()) -> B.EventM Name (B.Next World)
-      process stage = B.continue $ execState (stage keyPress) gameState
+      process stage = B.continue $ execState (stage keyPress) w
 
 -- no-op for all other inputs
 handleEvent w _                                         = B.continue w
@@ -54,4 +55,4 @@ playerTurn keyPress = do
       Combat _   -> combatActions w
       LootScreen -> lootActions w
       PathSelect -> pathActions w
---      Tinker     -> tinkerActions w
+      Tinker     -> tinkerActions w
