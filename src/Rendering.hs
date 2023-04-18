@@ -20,9 +20,8 @@ drawUI w
   | LootScreen <- w.status =
     drawLootScreen w
 
---  | Tinker <- w.status =
---    undefined
---    -- drawTinkerScreen w
+  | Tinker <- w.status =
+    drawTinkerScreen w
 --
 --  | PathSelect <- w.status =
 --    undefined
@@ -60,6 +59,17 @@ drawLootScreen w = [
   where
     playerBars = drawUnitInfo w player
     menu = box 10 80 "Loot" $ drawActions w $ lootActions w player (getEnemy w)
+
+drawTinkerScreen :: World -> [B.Widget Name]
+drawTinkerScreen w = [
+  playerBars
+  B.<=> menu
+  B.<=> B.padTop B.Max (drawEventList w)
+  ]
+  where
+    playerBars = drawUnitInfo w player
+    menu = box 10 80 "Tinkering" $ drawActions w $ []
+
 
 box :: Int -> Int -> String -> B.Widget Name -> B.Widget Name
 box v h title widget = B.vLimit v $ B.hLimit h $ borderWithLabel (B.str title) widget

@@ -35,11 +35,11 @@ handleEvent w _                                         = B.continue w
 combatTurn :: Char -> State World ()
 combatTurn keyPress = do
   playerTurn keyPress
-  endOfPlayerTurn <- updateStatus
+  endOfPlayerTurn <- checkCombatEnd
   -- return early if the player ended the fight or took a free action
   --if endOfPlayerTurn == Combat EnemyTurn then enemyTurn else return ()
 
-  endOfEnemyTurn <- updateStatus
+  endOfEnemyTurn <- checkCombatEnd
   return ()
 
 

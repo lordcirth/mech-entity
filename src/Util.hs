@@ -60,7 +60,7 @@ doneLoot w = Action {
     w <- get
     -- discard remaining loot & leave screen
     put w{currentLoot = [] }
-
+    setStatus Tinker
 
   ,item = Nothing
   ,key = '.'
@@ -83,14 +83,20 @@ lootAction w actor target key item = Action {
 getName :: World -> ID -> String
 getName w item = maybe "UNDEFINED" (\m -> m.name) (Map.lookup item w.meta)
 
-updateStatus :: State World Bool
-updateStatus = do
+setStatus :: GameStatus -> State World ()
+setStatus newStatus = do
+    w <- get
+    put $ w{status = newStatus}
+
+checkCombatEnd :: State World Bool
+checkCombatEnd = do
   w <- get
   let oldStatus = w.status
   let newStatus = checkStatus w
   if newStatus /= oldStatus then do
     let newLoot = (fromJust $ Map.lookup (getEnemy w) w.unit).loot
-    put $ w{status = newStatus, currentLoot = newLoot}
+    put $ w{currentLoot = newLoot}
+    setStatus newStatus
     return True
   else do
     return False
