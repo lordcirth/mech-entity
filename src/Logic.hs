@@ -53,3 +53,5 @@ playerTurn keyPress = do
 --      Combat ReloadPrompt -> weaponReloadActions w
       Combat _   -> combatActions w
       LootScreen -> lootActions w
+      PathSelect -> pathActions w
+--      Tinker     -> tinkerActions w

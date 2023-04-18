@@ -81,8 +81,11 @@ lootAction w actor target key item = Action {
   ,name   = getName w item
 }
 
-pathSelectAction :: World -> ID -> ID -> Int -> ID -> Action
-pathSelectAction w _ _ path _ = Action {
+pathActions :: World -> ID -> ID -> [Action]
+pathActions w _ _ = imap (pathSelectAction w) w.location.branches
+
+pathSelectAction :: World -> Int -> PathNode -> Action
+pathSelectAction w path _ = Action {
   effect  = do
     -- Set new location
     w <- get

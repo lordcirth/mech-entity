@@ -77,7 +77,7 @@ drawPathSelectScreen w = [
   ]
   where
     playerBars = drawUnitInfo w player
-    menu = box 10 80 "Choose a path" $ drawActions w $ []
+    menu = box 10 80 "Choose a path" $ drawActions w $ pathActions w player player
 
 box :: Int -> Int -> String -> B.Widget Name -> B.Widget Name
 box v h title widget = B.vLimit v $ B.hLimit h $ borderWithLabel (B.str title) widget
