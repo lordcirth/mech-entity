@@ -98,15 +98,13 @@ drawActions :: World -> [Action] -> B.Widget Name
 drawActions w actions = actionList
   where
     actionList :: B.Widget Name
-    actionList = (B.vBox $ imap (f) actions)
-    f :: Int -> (Action -> B.Widget Name)
-    f c = renderAction w (intToDigit c)
+    actionList = (B.vBox $ map (renderAction w) actions)
 
 
-renderAction :: World -> Char -> Action -> B.Widget Name
-renderAction w key action = header B.<+> (B.str $ action.name)
+renderAction :: World -> Action -> B.Widget Name
+renderAction w action = header B.<+> (B.str $ action.name)
   where
-    header = B.str $ key : " | "
+    header = B.str $ action.key : " | "
 
 
 drawGameOver :: World -> [B.Widget Name]
