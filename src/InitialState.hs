@@ -65,6 +65,7 @@ maintDroneUnit = Unit {
   ,loot = [scrapMetal]
 }
 
+endless = PathNode {enemy = Just maintDrone, branches = [endless]}
 
 units :: Map.Map ID Unit
 units = Map.fromList [(player, playerUnit), (maintDrone, maintDroneUnit)]
@@ -79,5 +80,5 @@ initialState = World {
   ,stack = stacks -- Multiple items per instance
   ,weapon = weapons
   ,currentLoot = []
-  ,paths = [PathNode {enemy = Just maintDrone, branches = []}]
+  ,location = endless
 }

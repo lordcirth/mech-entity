@@ -48,6 +48,7 @@ applyDamage dmg target = do
   let newEquip = e{hp = e.hp - dmg} :: Equipment
 
   put $ w{equip = (Map.insert target newEquip w.equip)}
+
 combatActions :: World -> ID -> ID -> [Action]
 combatActions w actor target = imap (attackAction w actor target) $ getWeapons w actor
 
@@ -78,6 +79,25 @@ lootAction w actor target key item = Action {
   ,item   = Just item
   ,key    = intToDigit key
   ,name   = getName w item
+}
+
+pathSelectAction :: World -> ID -> ID -> Int -> ID -> Action
+pathSelectAction w _ _ path _ = Action {
+  effect  = do
+    -- Set new location
+    w <- get
+    put w{location = (w.location.branches !! path)}
+
+    -- Replace enemy ID with clone
+    w <- get
+    e <- clone (fromJust $ w.location.enemy)
+    put w{location = w.location{enemy = Just e}}
+
+    setStatus (Combat PlayerTurn) -- TODO check if enemy exists
+
+  ,item = Nothing
+  ,key  = intToDigit path
+  ,name = [intToDigit path]
 }
 
 getName :: World -> ID -> String

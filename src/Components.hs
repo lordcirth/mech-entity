@@ -82,6 +82,6 @@ data World = World {
   ,stack       :: Map.Map ID Stack
   ,weapon      :: Map.Map ID Weapon
   ,currentLoot :: [ID]
-  ,paths       :: [PathNode]
+  ,location    :: PathNode
 }
   deriving (Show, Eq)
