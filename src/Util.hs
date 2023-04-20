@@ -23,7 +23,12 @@ clone templateID = do
   where
     newID = templateID + 1000 -- TODO
     f :: (World -> Map.Map ID a) -> State World ()
-    f m = undefined
+    f m = do
+      w <- get
+      return ()
+      where
+        entry w = Map.lookup templateID (m w) -- :: Maybe a
+
 
 getEnemy :: World -> ID
 getEnemy w = maintDrone -- TODO
