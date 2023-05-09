@@ -25,9 +25,11 @@ clone templateID = do
     f :: (World -> Map.Map ID a) -> State World ()
     f m = do
       w <- get
+      let entry = getEntry w
+
       return ()
       where
-        entry w = Map.lookup templateID (m w) -- :: Maybe a
+        getEntry w = Map.lookup templateID (m w) -- :: Maybe a
 
 
 getEnemy :: World -> ID
