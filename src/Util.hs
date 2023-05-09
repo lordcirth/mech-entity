@@ -12,24 +12,27 @@ import           InitialState              (maintDrone, player)
 -- Make a copy of all object properties and return new ID
 clone :: ID -> State World ID
 clone templateID = do
-  f consumable
-  f equip
-  f unit
-  f meta
-  f stack
-  f weapon
+  w <- get
+  let c = Map.lookup templateID w.consumable :: Maybe Consumable
+  put w{consumable = maybe w.consumable (\x -> Map.insert newID x w.consumable) c}
+--  f equip
+--  f unit
+--  f meta
+--  f stack
+--  f weapon
   return newID
 
   where
     newID = templateID + 1000 -- TODO
-    f :: (World -> Map.Map ID a) -> State World ()
-    f m = do
-      w <- get
-      let entry = getEntry w
-
-      return ()
-      where
-        getEntry w = Map.lookup templateID (m w) -- :: Maybe a
+--    f :: (World -> Map.Map ID a) -> State World ()
+--    f m = do
+--      w <- get
+--      let entry = getEntry w
+--      put w{m = m w}
+--
+--      return ()
+--      where
+--        getEntry w = Map.lookup templateID (m w) -- :: Maybe a
 
 
 getEnemy :: World -> ID
