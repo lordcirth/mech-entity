@@ -19,6 +19,7 @@ playerChassis = player
 
 fist = ID 100
 primitive20mmCannon = ID 101
+claw = ID 102
 
 metas :: Map.Map ID Meta
 metas = Map.fromList [
@@ -26,6 +27,7 @@ metas = Map.fromList [
   ,(maintDrone, Meta {name = "Maintenance Drone", description = "" })
   ,(player, Meta {name = "Player", description = "Player"})
   ,(fist, Meta {name = "Fist", description = ""})
+  ,(claw, Meta {name = "Claw", description = ""})
   ,(primitive20mmCannon, Meta {name = "Primitive 20mm Cannon", description = "Single-shot cannon"})
   ]
 
@@ -36,6 +38,7 @@ equips = Map.fromList [
   -- Hits are never rolled directly to armor
   -- ,(playerArmor, Equipment {hp = 15, mass = 10, slots = 0})
   ,(fist, Equipment {hp = 0, maxHp = 0, mass = 0, slots = 0})
+  ,(claw, Equipment {hp = 4, maxHp = 4, mass = 1, slots = 2})
   ,(primitive20mmCannon, Equipment {hp = 5, maxHp = 5, mass = 5, slots = 3})
   ]
 
@@ -46,8 +49,9 @@ stacks = Map.fromList [
 
 weapons :: Map.Map ID Weapon
 weapons = Map.fromList [
-  (fist, Weapon {damage = newDamage 1 4 0}),
-  (primitive20mmCannon, Weapon {damage = newDamage 1 6 2})
+  (fist, Weapon {damage = newDamage 1 4 0})
+  ,(primitive20mmCannon, Weapon {damage = newDamage 1 6 2})
+  ,(claw, Weapon {damage = newDamage 1 6 0})
   ]
 
 playerUnit :: Unit
@@ -59,7 +63,7 @@ playerUnit = Unit {
 }
 
 maintDroneUnit = Unit {
-  components = []
+  components = [claw]
   ,armor = 5
   ,maxArmor = 5
   ,loot = [scrapMetal]

@@ -38,11 +38,17 @@ combatTurn keyPress = do
   playerTurn keyPress
   endOfPlayerTurn <- checkCombatEnd
   -- return early if the player ended the fight or took a free action
-  --if endOfPlayerTurn == Combat EnemyTurn then enemyTurn else return ()
+  if not endOfPlayerTurn then enemyTurn else return ()
 
   endOfEnemyTurn <- checkCombatEnd
   return ()
 
+enemyTurn :: State World ()
+enemyTurn = do
+  w <- get
+
+  -- Fire weapon 0
+  doAction $ Just (head $ (combatActions w (getEnemy w) player))
 
 playerTurn :: Char -> State World ()
 playerTurn keyPress = do
