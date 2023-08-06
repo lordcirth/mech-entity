@@ -1,6 +1,7 @@
 module Util where
 
 import           Components
+import           Control.Monad             (replicateM)
 import           Control.Monad.Trans.State (State, execState, get, put)
 import           Data.Char                 (intToDigit)
 import           Data.List                 (intersect)
@@ -34,6 +35,18 @@ clone templateID = do
 --  f stack
 --  f weapon
   return newID
+
+rollWeaponDice :: Weapon -> State World Int
+rollWeaponDice wep = do
+  diceTotal <- rollDice (wep.damage.dieNum) (wep.damage.dieSize)
+  return $ wep.damage.flatDmg + diceTotal
+
+
+rollDice :: Int -> Int -> State World Int
+rollDice n die = do
+  let rolls = replicateM n $ rollDie die :: State World [Int]
+  dice <- rolls
+  return $ sum dice
 
 rollDie :: Int -> State World Int
 rollDie die = do
@@ -198,4 +211,5 @@ attackAction w actor target key item = Action {
     attackEffect actor target = do
       event $ (show $ getName w actor) ++ " attacks " ++
         (show $ getName w target)
-      applyDamage 1 target
+      damage <- rollDie 6
+      applyDamage damage target

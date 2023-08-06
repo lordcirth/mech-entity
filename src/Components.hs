@@ -3,8 +3,8 @@ module Components
 where
 
 import           Control.Monad.Trans.State (State)
-import           System.Random (StdGen)
 import qualified Data.Map.Strict           as Map
+import           System.Random             (StdGen)
 
 type Name = ()
 
