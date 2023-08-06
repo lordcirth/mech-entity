@@ -8,10 +8,15 @@ import           Data.List.Index           (deleteAt, imap)
 import qualified Data.Map.Strict           as Map
 import           Data.Maybe                (fromJust, listToMaybe)
 import           InitialState              (maintDrone, player)
+import           System.Random             (randomR)
 
 -- Make a copy of all object properties and return new ID
 clone :: ID -> State World ID
 clone templateID = do
+
+  newInt <- rollDie 10000000
+  let newID = fromIntegral newInt
+
   w <- get
   let c = Map.lookup templateID w.consumable :: Maybe Consumable
   put w{consumable = maybe w.consumable (\x -> Map.insert newID x w.consumable) c}
@@ -28,11 +33,17 @@ clone templateID = do
 --  f weapon
   return newID
 
-  where
-    newID = templateID + 1000 -- TODO
+
+rollDie :: Int -> State World Int
+rollDie die = do
+  g <- get
+  let (n, r) = randomR (1,die) g.rng
+  put $ g{rng = r}
+  return n
+
 
 getEnemy :: World -> ID
-getEnemy w = maintDrone -- TODO
+getEnemy w = fromJust w.location.enemy
 
 getPlayer :: World -> ID
 getPlayer w = player

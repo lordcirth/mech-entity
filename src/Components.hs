@@ -85,6 +85,6 @@ data World = World {
   ,weapon      :: Map.Map ID Weapon
   ,currentLoot :: [ID]
   ,location    :: PathNode
-  ,rand        :: StdGen
+  ,rng         :: StdGen
 }
   deriving (Show)

@@ -13,7 +13,7 @@ import           System.Random             (mkStdGen, randomRIO)
 main :: IO ()
 main = do
   let r = mkStdGen 12345
-  let readyState = initialState{rand = r}
+  let readyState = initialState{rng = r}
 
   -- Run main loop
   finalState <- defaultMain brickApp readyState
