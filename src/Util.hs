@@ -27,7 +27,10 @@ clone templateID = do
   w <- get
   let u = Map.lookup templateID w.unit :: Maybe Unit
   put w{unit = maybe w.unit (\x -> Map.insert newID x w.unit) u}
---  f meta
+
+  w <- get
+  let u = Map.lookup templateID w.meta :: Maybe Meta
+  put w{meta = maybe w.meta (\x -> Map.insert newID x w.meta) u}
 --  f stack
 --  f weapon
   return newID
