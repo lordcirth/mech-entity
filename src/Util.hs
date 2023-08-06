@@ -211,5 +211,5 @@ attackAction w actor target key item = Action {
     attackEffect actor target = do
       event $ (show $ getName w actor) ++ " attacks " ++
         (show $ getName w target)
-      damage <- rollDie 6
+      damage <- rollWeaponDice (fromJust $ Map.lookup item w.weapon)
       applyDamage damage target
