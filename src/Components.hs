@@ -3,6 +3,7 @@ module Components
 where
 
 import           Control.Monad.Trans.State (State)
+import           System.Random (StdGen)
 import qualified Data.Map.Strict           as Map
 
 type Name = ()
@@ -84,5 +85,6 @@ data World = World {
   ,weapon      :: Map.Map ID Weapon
   ,currentLoot :: [ID]
   ,location    :: PathNode
+  ,rand        :: StdGen
 }
   deriving (Show)

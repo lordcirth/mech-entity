@@ -24,6 +24,7 @@ dependencies:
   - brick
   - containers
   - ilist
+  - random
   - record-dot-preprocessor
   - record-hasfield
   - transformers

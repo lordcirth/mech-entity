@@ -2,17 +2,19 @@ module Main where
 
 import           Brick.Main                (defaultMain)
 import           BrickApp
-import           Components ()
-import           InitialState (initialState)
+import           Components                ()
+import           InitialState              (initialState)
 --import           Logic (handleEvent)
 
 import           Control.Monad.Trans.State
---import           System.Random             (mkStdGen, randomRIO)
 import           InitialState
+import           System.Random             (mkStdGen, randomRIO)
 
 main :: IO ()
 main = do
+  let r = mkStdGen 12345
+  let readyState = initialState{rand = r}
 
   -- Run main loop
-  finalState <- defaultMain brickApp initialState
+  finalState <- defaultMain brickApp readyState
   print finalState
