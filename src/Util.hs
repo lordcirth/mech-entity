@@ -15,8 +15,14 @@ clone templateID = do
   w <- get
   let c = Map.lookup templateID w.consumable :: Maybe Consumable
   put w{consumable = maybe w.consumable (\x -> Map.insert newID x w.consumable) c}
---  f equip
---  f unit
+
+  w <- get
+  let u = Map.lookup templateID w.equip :: Maybe Equipment
+  put w{equip = maybe w.equip (\x -> Map.insert newID x w.equip) u}
+
+  w <- get
+  let u = Map.lookup templateID w.unit :: Maybe Unit
+  put w{unit = maybe w.unit (\x -> Map.insert newID x w.unit) u}
 --  f meta
 --  f stack
 --  f weapon
@@ -24,16 +30,6 @@ clone templateID = do
 
   where
     newID = templateID + 1000 -- TODO
---    f :: (World -> Map.Map ID a) -> State World ()
---    f m = do
---      w <- get
---      let entry = getEntry w
---      put w{m = m w}
---
---      return ()
---      where
---        getEntry w = Map.lookup templateID (m w) -- :: Maybe a
-
 
 getEnemy :: World -> ID
 getEnemy w = maintDrone -- TODO
