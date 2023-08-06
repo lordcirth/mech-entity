@@ -72,6 +72,16 @@ getWeapons w u = intersect c ws
     c = (fromJust $ Map.lookup u (w.unit)).components
     ws = Map.keys (w.weapon)
 
+-- Returns leftover damage
+armorDamage :: Int -> ID -> State World Int
+armorDamage dmg targetID = do
+  w <- get
+  let u = fromJust (Map.lookup targetID w.unit) :: Unit
+  let armorDmg = min ((u.armor `div` 4) + 1) u.armor
+  let newTarget = u{armor = u.armor - armorDmg} :: Unit
+  put $ w{unit = (Map.insert targetID newTarget w.unit)}
+  return $ dmg - armorDmg
+
 applyDamage :: Int -> ID -> State World ()
 applyDamage dmg target = do
   w <- get
@@ -209,7 +219,8 @@ attackAction w actor target key item = Action {
     -- Target is assumed to be a Unit
     attackEffect :: ID -> ID -> State World ()
     attackEffect actor target = do
-      event $ (show $ getName w actor) ++ " attacks " ++
-        (show $ getName w target)
       damage <- rollWeaponDice (fromJust $ Map.lookup item w.weapon)
-      applyDamage damage target
+      event $ (show $ getName w actor) ++ " attacks " ++
+        (show $ getName w target) ++ " for " ++ (show damage)
+      internalDamage <- armorDamage damage target
+      applyDamage internalDamage target
