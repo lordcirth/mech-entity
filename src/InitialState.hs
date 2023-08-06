@@ -81,4 +81,5 @@ initialState = World {
   ,weapon = weapons
   ,currentLoot = []
   ,location = endless
+  ,enemy = Nothing
 }

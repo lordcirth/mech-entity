@@ -86,5 +86,6 @@ data World = World {
   ,currentLoot :: [ID]
   ,location    :: PathNode
   ,rng         :: StdGen
+  ,enemy       :: Maybe ID
 }
   deriving (Show)

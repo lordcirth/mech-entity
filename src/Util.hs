@@ -14,8 +14,7 @@ import           System.Random             (randomR)
 clone :: ID -> State World ID
 clone templateID = do
 
-  newInt <- rollDie 10000000
-  let newID = fromIntegral newInt
+  let newID = templateID + 10000
 
   w <- get
   let c = Map.lookup templateID w.consumable :: Maybe Consumable
@@ -33,7 +32,6 @@ clone templateID = do
 --  f weapon
   return newID
 
-
 rollDie :: Int -> State World Int
 rollDie die = do
   g <- get
@@ -43,7 +41,7 @@ rollDie die = do
 
 
 getEnemy :: World -> ID
-getEnemy w = fromJust w.location.enemy
+getEnemy w = fromJust w.enemy
 
 getPlayer :: World -> ID
 getPlayer w = player
@@ -124,7 +122,8 @@ pathSelectAction w path _ = Action {
     -- Replace enemy ID with clone
     w <- get
     e <- clone (fromJust $ w.location.enemy)
-    put w{location = w.location{enemy = Just e}}
+    w <- get
+    put w{enemy = Just e}
 
     setStatus (Combat PlayerTurn) -- TODO check if enemy exists
 
@@ -197,4 +196,3 @@ attackAction w actor target key item = Action {
       event $ (show $ getName w actor) ++ " attacks " ++
         (show $ getName w target)
       applyDamage 1 target
-

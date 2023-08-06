@@ -36,7 +36,8 @@ drawUI w
 drawCombatUI :: World -> [B.Widget Name]
 drawCombatUI w = [
   playerBars B.<+> (hCenter $ B.str "|") B.<+> enemyBars
-  B.<=> menu
+  B.<=>
+  menu
   B.<=> B.padTop B.Max (drawEventList w)
   ]
   where
