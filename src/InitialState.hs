@@ -5,6 +5,7 @@ import           Constructors
 import qualified Data.Map.Strict as Map
 
 scrapMetal = ID 001
+ammo20mm = ID 020
 
 player = ID 0
 maintDrone = ID 1001
@@ -49,9 +50,9 @@ stacks = Map.fromList [
 
 weapons :: Map.Map ID Weapon
 weapons = Map.fromList [
-  (fist, Weapon {damage = newDamage 1 4 0})
-  ,(primitive20mmCannon, Weapon {damage = newDamage 1 6 2})
-  ,(claw, Weapon {damage = newDamage 1 6 0})
+  (fist, Weapon {damage = newDamage 1 4 0, ammoType = Nothing})
+  ,(primitive20mmCannon, Weapon {damage = newDamage 1 6 2, ammoType = Just ammo20mm})
+  ,(claw, Weapon {damage = newDamage 1 6 0, ammoType = Nothing})
   ]
 
 playerUnit :: Unit

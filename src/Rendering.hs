@@ -7,7 +7,7 @@ import           Components
 import           Data.Char            (intToDigit)
 import           Data.List.Index      (imap)
 import qualified Data.Map.Strict      as Map
-import           Data.Maybe           (fromJust)
+import           Data.Maybe           (fromJust, isJust)
 import           InitialState
 import           Util
 
@@ -121,9 +121,15 @@ drawActions w actions = actionList
 
 
 renderAction :: World -> Action -> B.Widget Name
-renderAction w action = header B.<+> (B.str $ action.name)
+renderAction w action = header B.<+> (B.str $ action.name) B.<+> B.str (ammoInfo action.item)
   where
     header = B.str $ action.key : " | "
+    ammoInfo :: Maybe ID -> String
+    ammoInfo mi
+      | Just i <- mi
+      , Just wep <- Map.lookup i w.weapon
+      = " " ++ show (wep.ammo)
+      | otherwise = ""
 
 
 drawGameOver :: World -> [B.Widget Name]
