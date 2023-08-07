@@ -48,11 +48,15 @@ data Stack = Stack {
 }
   deriving (Show, Eq)
 
-data Weapon = Weapon {
-  ammoType :: Maybe ID
-  ,ammo     :: Int
+data Ammo = Ammo {
+  ammoType :: ID
+  ,ammo    :: Int
   ,maxAmmo :: Int
-  ,damage  :: Damage
+}
+
+data Weapon = Weapon {
+  damage    :: Damage
+  ,ammoInfo :: Ammo
 }
   deriving (Show, Eq)
 
