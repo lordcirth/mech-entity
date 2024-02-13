@@ -128,6 +128,7 @@ renderAction w action = header B.<+> (B.str $ action.name) B.<+> B.str (ammoInfo
     ammoInfo mi
       | Just i <- mi
       , Just wep <- Map.lookup i w.weapon
+      --, Just a <- 
       = " " ++ show (wep.ammo)
       | otherwise = ""
 

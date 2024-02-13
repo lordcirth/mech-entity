@@ -1,7 +1,10 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE TemplateHaskell            #-}
 module Components
 where
 
+import           Control.Lens              hiding (element)
+import           Control.Lens.TH
 import           Control.Monad.Trans.State (State)
 import qualified Data.Map.Strict           as Map
 import           System.Random             (StdGen)
@@ -49,10 +52,12 @@ data Stack = Stack {
   deriving (Show, Eq)
 
 data Ammo = Ammo {
-  ammoType :: ID
-  ,ammo    :: Int
-  ,maxAmmo :: Int
+  _ammoType :: ID
+  ,_ammo    :: Int
+  ,_maxAmmo :: Int
 }
+
+$(makeLenses ''Ammo)
 
 data Weapon = Weapon {
   damage    :: Damage
